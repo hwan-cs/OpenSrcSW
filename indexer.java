@@ -117,7 +117,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id4, words.get(j))>0)
 					temp++;
-				val += "0 " + df2.format(occurance.get(id0.indexOf(words.get(j)))*Math.log10((5.0/(double)temp))) + " ";
+				val += "0 " + df2.format(occurance.get(id0.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
 			}
 			if(Collections.frequency(id1, words.get(j)) != 0)
 			{
@@ -143,7 +143,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id4, words.get(j))>0)
 					temp++;
-				val += "2 " + df2.format(occurance.get(311+ id2.indexOf(words.get(j)))*Math.log10((5.0/(double)temp))) + " ";
+				val += "2 " + df2.format(occurance.get(311+ id2.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
 			}
 			if(Collections.frequency(id3, words.get(j)) != 0)
 			{
@@ -156,7 +156,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id4, words.get(j))>0)
 					temp++;
-				val += "3 " + df2.format(occurance.get(402+id3.indexOf(words.get(j)))*Math.log10((5.0/(double)temp))) + " ";
+				val += "3 " + df2.format(occurance.get(402+id3.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
 			}
 			if(Collections.frequency(id4, words.get(j)) != 0)
 			{
@@ -174,7 +174,7 @@ public class indexer
 					System.out.println("DEDEDE"+occurance.get(491+id4.indexOf(words.get(j))));
 					System.out.println(Math.log((5.0/(double)temp)));
 				}
-				val += "4 " + df2.format(occurance.get(491+id4.indexOf(words.get(j)))*Math.log10((5.0/(double)temp))) + " ";
+				val += "4 " + df2.format(occurance.get(491+id4.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
 			}
 			hashMap.put(words.get(j), val);
 		}
