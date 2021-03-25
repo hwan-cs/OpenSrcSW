@@ -169,11 +169,6 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id0, words.get(j))>0)
 					temp++;
-				if(words.get(j).equals("모양"))
-				{
-					System.out.println("DEDEDE"+occurance.get(491+id4.indexOf(words.get(j))));
-					System.out.println(Math.log((5.0/(double)temp)));
-				}
 				val += "4 " + df2.format(occurance.get(491+id4.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
 			}
 			hashMap.put(words.get(j), val);
