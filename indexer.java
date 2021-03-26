@@ -130,7 +130,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id4, words.get(j))>0)
 					temp++;
-				val += "1 " + df2.format(occurance.get(137+id1.indexOf(words.get(j)))*Math.log10((5.0/(double)temp))) + " ";
+				val += "1 " + df2.format(occurance.get(137+id1.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
 			}
 			if(Collections.frequency(id2, words.get(j)) != 0)
 			{
