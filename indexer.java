@@ -10,12 +10,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+
+import org.snu.ids.kkma.index.Keyword;
+import org.snu.ids.kkma.index.KeywordExtractor;
+import org.snu.ids.kkma.index.KeywordList;
 
 public class indexer 
 {
@@ -93,10 +99,7 @@ public class indexer
 				if(numIndex == content[i].length() || wordIndex == content[i].length()-1)
 					break;
 			}
-			System.out.println(words.size() + " " + occurance.size());
 		}
-		System.out.println();
-		System.out.println(words.size() + " " + occurance.size());
 		ArrayList <String> id0 = new ArrayList(words.subList(0, 137));
 		ArrayList <String> id1 = new ArrayList(words.subList(137, 311));
 		ArrayList <String> id2 = new ArrayList(words.subList(311, 402));
@@ -117,7 +120,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id4, words.get(j))>0)
 					temp++;
-				val += "0 " + df2.format(occurance.get(id0.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
+				val += " 0 " + df2.format(occurance.get(id0.indexOf(words.get(j)))*Math.log((5.0/(double)temp)));
 			}
 			if(Collections.frequency(id1, words.get(j)) != 0)
 			{
@@ -130,7 +133,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id4, words.get(j))>0)
 					temp++;
-				val += "1 " + df2.format(occurance.get(137+id1.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
+				val += " 1 " + df2.format(occurance.get(137+id1.indexOf(words.get(j)))*Math.log((5.0/(double)temp)));
 			}
 			if(Collections.frequency(id2, words.get(j)) != 0)
 			{
@@ -143,7 +146,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id4, words.get(j))>0)
 					temp++;
-				val += "2 " + df2.format(occurance.get(311+ id2.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
+				val += " 2 " + df2.format(occurance.get(311+ id2.indexOf(words.get(j)))*Math.log((5.0/(double)temp)));
 			}
 			if(Collections.frequency(id3, words.get(j)) != 0)
 			{
@@ -156,7 +159,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id4, words.get(j))>0)
 					temp++;
-				val += "3 " + df2.format(occurance.get(402+id3.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
+				val += " 3 " + df2.format(occurance.get(402+id3.indexOf(words.get(j)))*Math.log((5.0/(double)temp)));
 			}
 			if(Collections.frequency(id4, words.get(j)) != 0)
 			{
@@ -169,7 +172,7 @@ public class indexer
 					temp++;
 				if(Collections.frequency(id0, words.get(j))>0)
 					temp++;
-				val += "4 " + df2.format(occurance.get(491+id4.indexOf(words.get(j)))*Math.log((5.0/(double)temp))) + " ";
+				val += " 4 " + df2.format(occurance.get(491+id4.indexOf(words.get(j)))*Math.log((5.0/(double)temp)));
 			}
 			hashMap.put(words.get(j), val);
 		}
@@ -193,6 +196,80 @@ public class indexer
 			String key = it.next();
 			String value = (String)hMap.get(key);
 			System.out.println(key + "-> "+ value);
+		}
+	}
+	public static void CalcSim() throws FileNotFoundException, IOException, ClassNotFoundException
+	{
+		ArrayList<Integer> queryCnt = new ArrayList<Integer>();
+		ArrayList<String> queryWord = new ArrayList<String>();
+		double [] queryResult = new double [5];
+		System.out.println("Query를 입력해주세요: ");
+		Scanner keyboard = new Scanner(System.in);
+		String str = keyboard.nextLine();
+		//init KeyWord Extractor
+		KeywordExtractor ke = new KeywordExtractor();
+		//extract keywords
+		KeywordList kl = ke.extractKeyword(str, true);
+		//print result
+		for(int j = 0;j<kl.size();j++)
+		{
+			Keyword kWord = kl.get(j);
+			queryCnt.add(kWord.getCnt());
+			queryWord.add(kWord.getString());
+		}
+		FileInputStream fileInputStream = new FileInputStream("index.post");
+		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+		
+		Object object = objectInputStream.readObject();
+		objectInputStream.close();
+		
+		HashMap hMap = (HashMap)object;
+		Iterator<String> it = hMap.keySet().iterator();
+		
+		ArrayList<String> words = new ArrayList<String>();
+		
+		while(it.hasNext())
+		{
+			String key = it.next();
+			words.add(key);
+			if(queryWord.contains(key))
+			{
+				for(int i=0;i<((String)hMap.get(key)).length();i++)
+				{
+					if(((String)hMap.get(key)).substring(i,i+1).equals(" "))
+					{
+						int index = Integer.parseInt((((String) hMap.get(key)).substring(i+1,i+2)));
+						double result =0;
+						String foo="";
+						while(((i+3)<(((String)hMap.get(key)).length()))&&!(((String)hMap.get(key)).substring(i+3,i+4).equals(" ")))
+						{
+							foo+=((String)hMap.get(key)).substring(i+3,i+4);
+							i++;
+						}
+						result += ((double)queryCnt.get(queryWord.indexOf(key)))*Double.parseDouble(foo);
+						queryResult[index]+=result;
+					}
+				}
+				
+			}
+		}
+		double id0 = 0,id1=0,id2=0,id3=0,id4=0;
+		for(int i=0;i<queryResult.length;i++)
+		{
+			if(i==0) id0=queryResult[i];
+			if(i==1) id1=queryResult[i];
+			if(i==2) id2=queryResult[i];
+			if(i==3) id3=queryResult[i];
+			if(i==4) id4=queryResult[i];
+		}
+		Arrays.sort(queryResult);
+		for(int i = queryResult.length-1;i>1;i--)
+		{
+			if(queryResult[i]==id0) System.out.println((5-i)+". 떡.html: "+id0);
+			if(queryResult[i]==id1) System.out.println((5-i)+". 라면.html: "+id1);
+			if(queryResult[i]==id2) System.out.println((5-i)+". 아이스크림.html: "+id2);
+			if(queryResult[i]==id3) System.out.println((5-i)+". 초밥.html: "+id3);
+			if(queryResult[i]==id4) System.out.println((5-i)+". 파스타.html: "+id4);
 		}
 	}
 }
