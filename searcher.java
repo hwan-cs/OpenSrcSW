@@ -83,15 +83,48 @@ public class searcher
 			if(i==4) id4=queryResult[i];
 		}
 		Arrays.sort(queryResult);
-		System.out.println(queryResult.length);
+		int index =0;
+		String [] listhtmml = {"떡.html", "라면.html", "아이스크림.html", "초밥.html","파스타.html"};
 		for(int i = queryResult.length-1;i>1;i--)
 		{
-			if(queryResult[i]==0) return;
-			if(queryResult[i]==id0) System.out.println((5-i)+". 떡.html: "+df2.format(id0));
-			if(queryResult[i]==id1) System.out.println((5-i)+". 라면.html: "+df2.format(id1));
-			if(queryResult[i]==id2) System.out.println((5-i)+". 아이스크림.html: "+df2.format(id2));
-			if(queryResult[i]==id3) System.out.println((5-i)+". 초밥.html: "+df2.format(id3));
-			if(queryResult[i]==id4) System.out.println((5-i)+". 파스타.html: "+df2.format(id4));
+			if(queryResult[i]==0) 
+			{
+				for(int j=0;j<3;j++)
+				{
+					if(index<5&&((5-i+j)<4))
+					{
+						System.out.println((5-i+j)+". "+listhtmml[index]+": 0.0");
+						index++;
+					}
+					else
+						return;
+				}
+			}
+			if(queryResult[i]==id0) 
+			{
+				System.out.println((5-i)+". 떡.html: "+df2.format(id0));
+				index=1;
+			}
+			if(queryResult[i]==id1) 
+			{
+				System.out.println((5-i)+". 라면.html: "+df2.format(id1));
+				index=2;
+			}
+			if(queryResult[i]==id2) 
+			{
+				System.out.println((5-i)+". 아이스크림.html: "+df2.format(id2));
+				index=3;
+			}
+			if(queryResult[i]==id3) 
+			{
+				System.out.println((5-i)+". 초밥.html: "+df2.format(id3));
+				index=4;
+			}
+			if(queryResult[i]==id4) 
+			{
+				System.out.println((5-i)+". 파스타.html: "+df2.format(id4));
+				index=5;
+			}
 		}
 	}
 }

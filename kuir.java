@@ -36,7 +36,7 @@ public class kuir
 	public static void main(String[] args) throws ParserConfigurationException, FileNotFoundException, TransformerException, IOException, ClassNotFoundException
 	{
 		// TODO Auto-generated method stub
-		String [] listhtmml = {"떡.html", "라면.html", "아이스크림.html", "초밥.html","파스타.html"};;
+		String [] listhtmml = {"떡.html", "라면.html", "아이스크림.html", "초밥.html","파스타.html"};
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		
 		Transformer transformer = transformerFactory.newTransformer();
