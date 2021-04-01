@@ -54,6 +54,6 @@ public class kuir
 		transformer.transform(source2, result2);
 		
 		indexer.Indexer();
-		indexer.CalcSim();
+		searcher.CalcSim();
 	}
 }
