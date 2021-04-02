@@ -103,26 +103,31 @@ public class searcher
 			if(queryResult[i]==id0) 
 			{
 				System.out.println((5-i)+". 떡.html: "+df2.format(id0));
+				id0=-1.0;
 				index=1;
 			}
-			if(queryResult[i]==id1) 
+			else if(queryResult[i]==id1) 
 			{
 				System.out.println((5-i)+". 라면.html: "+df2.format(id1));
+				id1=-1.0;
 				index=2;
 			}
-			if(queryResult[i]==id2) 
+			else if(queryResult[i]==id2) 
 			{
 				System.out.println((5-i)+". 아이스크림.html: "+df2.format(id2));
+				id2=-1.0;
 				index=3;
 			}
-			if(queryResult[i]==id3) 
+			else if(queryResult[i]==id3) 
 			{
 				System.out.println((5-i)+". 초밥.html: "+df2.format(id3));
+				id3=-1.0;
 				index=4;
 			}
-			if(queryResult[i]==id4) 
+			else if(queryResult[i]==id4) 
 			{
 				System.out.println((5-i)+". 파스타.html: "+df2.format(id4));
+				id4=-1.0;
 				index=5;
 			}
 		}
