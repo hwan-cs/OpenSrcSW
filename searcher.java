@@ -18,7 +18,7 @@ import org.snu.ids.kkma.index.KeywordList;
 public class searcher 
 {
 	private static DecimalFormat df2 = new DecimalFormat("#.##");
-	public static void CalcSim() throws FileNotFoundException, IOException, ClassNotFoundException
+	public static void InnerProduct() throws FileNotFoundException, IOException, ClassNotFoundException
 	{
 		ArrayList<Integer> queryCnt = new ArrayList<Integer>();
 		ArrayList<String> queryWord = new ArrayList<String>();
