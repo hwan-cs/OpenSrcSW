@@ -18,7 +18,7 @@ import org.snu.ids.kkma.index.KeywordList;
 public class searcher 
 {
 	private static DecimalFormat df2 = new DecimalFormat("#.##");
-	public static void CalcSim2() throws FileNotFoundException, IOException, ClassNotFoundException
+	public static void CalcSim() throws FileNotFoundException, IOException, ClassNotFoundException
 	{
 		ArrayList<Integer> queryCnt = new ArrayList<Integer>();
 		ArrayList<String> queryWord = new ArrayList<String>();
@@ -48,6 +48,8 @@ public class searcher
 		
 		ArrayList<String> words = new ArrayList<String>();
 		
+		double cosA = 0.0;
+		double cosB = 0.0;
 		while(it.hasNext())
 		{
 			String key = it.next();
@@ -67,6 +69,8 @@ public class searcher
 							i++;
 						}
 						result += ((double)queryCnt.get(queryWord.indexOf(key)))*Double.parseDouble(foo);
+						cosA += Math.pow(((double)queryCnt.get(queryWord.indexOf(key))), 2);
+						cosB += Math.pow(Double.parseDouble(foo), 2);
 						queryResult[index]+=result;
 					}
 				}
@@ -74,6 +78,10 @@ public class searcher
 			}
 		}
 		double id0 = 0,id1=0,id2=0,id3=0,id4=0;
+		for(int i=0;i<queryResult.length;i++)
+		{
+			queryResult[i]=queryResult[i]/(Math.sqrt(cosA)*Math.sqrt(cosB));
+		}
 		for(int i=0;i<queryResult.length;i++)
 		{
 			if(i==0) id0=queryResult[i];
